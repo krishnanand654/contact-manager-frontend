@@ -1,5 +1,6 @@
+/** redux-persist will persist the data even if reloaded */
 import { configureStore } from '@reduxjs/toolkit';
-import storage from 'redux-persist/lib/storage'; // defaults to localStorage for web
+import storage from 'redux-persist/lib/storage';
 import { persistReducer, persistStore } from 'redux-persist';
 import rootReducer from './rootReducer';
 import {

@@ -1,3 +1,4 @@
+/** Authentication slice allows for managing auth states within the application */
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
@@ -18,9 +19,12 @@ const authSlice = createSlice({
             state.isAuthenticated = false;
             state.token = null
         },
+        refresh(state, action) {
+            state.token = action.payload.token;
+        }
     },
 })
 
-export const { login, logout } = authSlice.actions;
+export const { login, logout, refresh } = authSlice.actions;
 
 export default authSlice.reducer;

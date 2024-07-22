@@ -1,0 +1,29 @@
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+
+  border-right: 1px solid #dfdfdf;
+  height: 90vh;
+
+  width: 250px;
+}
+
+.sidebar-item {
+  padding: 10px;
+  font-weight: 500;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.active {
+  background-color: #e4e4e4;
+  border-radius: 6px;
+}
+
+@media (max-width: 768px) {
+  .sidebar {
+    display: none;
+  }
+}
