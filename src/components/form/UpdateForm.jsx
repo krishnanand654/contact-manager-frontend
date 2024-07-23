@@ -1,6 +1,7 @@
 import { Input, Button } from "@nextui-org/react";
 import { useState, useEffect } from "react";
 import { Textarea } from "@nextui-org/react";
+import { validateContactForm } from "./ContactForm/contactFormValidation";
 
 const UpdateForm = ({ contactData, handleUpdateForm, serverErrors }) => {
     const [formData, setFormData] = useState({
@@ -49,28 +50,16 @@ const UpdateForm = ({ contactData, handleUpdateForm, serverErrors }) => {
         });
     };
 
-
-    const validate = () => {
-        const errors = {};
-        if (!formData.firstName) errors.firstName = "First name is required";
-        if (!formData.lastName) errors.lastName = "Last name is required";
-        if (!formData.address) errors.address = "Address is required";
-        if (!formData.company) errors.company = "Company is required";
-        // if (!formData.phoneNumbers[0]) errors.phoneNumbers0 = "Phone number 1 is required";
-        return errors;
-    };
-
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const validationErrors = validate();
+        const validationErrors = validateContactForm(formData);
 
         if (Object.keys(validationErrors).length === 0) {
-            setErrors({});
             handleUpdateForm(formData)
-
-            console.log('Form submitted', formData);
+            setErrors({});
         } else {
             setErrors(validationErrors);
+
         }
     };
 
@@ -147,6 +136,7 @@ const UpdateForm = ({ contactData, handleUpdateForm, serverErrors }) => {
 
                     </div>
                     {errors.phoneNumbers && <span className="text-danger text-sm mt-1">{errors.phoneNumbers}</span>}
+                    {errors.phoneNumbers1 && <span className="text-danger text-sm mt-1">{errors.phoneNumbers1}</span>}
                 </div>
 
             </div>

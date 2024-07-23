@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { login, logout } from "../features/auth/authSlice";
 import { login as loginApi } from '../api/authApi';
 
+
 const useAuth = () => {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
@@ -12,10 +13,12 @@ const useAuth = () => {
     const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
 
     const handleLogin = async (email, password) => {
+        setLoading(true)
         try {
             const response = await loginApi(email, password)
             const token = response.data.accessToken;
             dispatch(login({ token }))
+            setLoading(false)
         } catch (error) {
             setError(error.response ? error.response.data.message : "Login failed");
         } finally {
@@ -25,6 +28,7 @@ const useAuth = () => {
 
     const handleLogout = () => {
         dispatch(logout())
+        localStorage.clear()
         console.log("Logout");
     }
 

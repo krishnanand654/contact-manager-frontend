@@ -11,3 +11,8 @@ nav header {
   font-family: "DM Sans", sans-serif;
   font-optical-sizing: auto;
 }
+
+.profile-bg {
+  background-image: url("https://cdn.dribbble.com/userupload/6625696/file/original-7334ecb2aaf44870dca130caeb085cad.jpg?resize=1200x675&vertical=center");
+  background-position: 50%;
+}

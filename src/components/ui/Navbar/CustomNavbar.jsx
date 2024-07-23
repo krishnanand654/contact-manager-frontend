@@ -6,6 +6,7 @@ import React from "react";
 
 export default function CustomNavbar() {
     const userData = useSelector((state) => state.user.userData);
+
     const [isMenuOpen, setIsMenuOpen] = React.useReducer((current) => !current, false);
     const { handleLogout } = useAuth();
     const nav = useNavigate();
@@ -20,6 +21,7 @@ export default function CustomNavbar() {
         handleLogout()
         nav("/login")
     }
+
 
     const handleRoute = (route) => {
         nav(route)
@@ -75,7 +77,7 @@ export default function CustomNavbar() {
                             color="default"
                             name="Jason Hughes"
                             size="sm"
-                            src={userData ? `data:image/jpeg;base64,${userData.profilePicture.data}` : "https://i.pravatar.cc/150?u=a042581f4e29026704d"}
+                            src={userData?.profilePicture ? `data:image/jpeg;base64,${userData.profilePicture?.data}` : "https://i.pravatar.cc/150?u=a042581f4e29026704d"}
                         />
 
                     </DropdownTrigger>
@@ -84,7 +86,7 @@ export default function CustomNavbar() {
                             <p className="font-semibold">Signed in as</p>
                             <p className="font-semibold">{userData && userData.firstName || "User"}</p>
                         </DropdownItem>
-                        <DropdownItem key="settings">Profile</DropdownItem>
+                        <DropdownItem key="settings" onPress={() => { nav('/profile') }}>Profile</DropdownItem>
                         <DropdownItem key="logout" color="danger" onPress={logout}>
                             Log Out
                         </DropdownItem>

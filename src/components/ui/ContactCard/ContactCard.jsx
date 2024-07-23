@@ -4,12 +4,18 @@ import { useNavigate } from "react-router-dom";
 import UpdateModal from "../UpdateModal/UpdateModal.jsx";
 import { Skeleton } from "@nextui-org/react";
 import { getRandomColor } from "../../../utils/randomColorGenerator.js";
+import { Button } from "@nextui-org/react";
+import { deleteContact } from "../../../api/deleteApi.js";
+import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import { toggleUpdateState } from "../../../features/update/updateSlice.js";
 
 const ContactCard = ({ id }) => {
     const [data, setData] = useState(null);
-    const [updateTriggered, setUpdateTriggered] = useState(false);
+    const updateState = useSelector(state => state.update.updateState)
     const [color, setColor] = useState("");
     const nav = useNavigate();
+    const dispatch = useDispatch();
 
     useEffect(() => {
         const fetchById = async (id) => {
@@ -21,7 +27,19 @@ const ContactCard = ({ id }) => {
             }
         };
         fetchById(id);
-    }, [id, updateTriggered]);
+    }, [id, updateState]);
+
+    const handleDelete = async (id) => {
+        try {
+            const response = await deleteContact(id);
+            if (response != undefined) {
+                dispatch(toggleUpdateState())
+                nav('/home')
+            }
+        } catch (e) {
+            console.log(e);
+        }
+    }
 
 
     useEffect(() => {
@@ -30,11 +48,6 @@ const ContactCard = ({ id }) => {
             setColor(getRandomColor(AvatarChar));
         }
     }, [data, getRandomColor])
-
-    const handleUpdate = () => {
-        setUpdateTriggered(prev => !prev);
-    };
-
 
 
 
@@ -54,7 +67,10 @@ const ContactCard = ({ id }) => {
                         <Skeleton className="h-3 w-3/5 rounded-lg" />}
                     {data.company ?
                         <p className="text-zinc-600 pb-3">{data.company}</p> : <Skeleton className="h-3 mt-3 w-3/5 rounded-lg" />}
-                    <UpdateModal data={data} onUpdate={handleUpdate} />
+                    <div className="flex gap-2">
+                        <UpdateModal data={data} />
+                        <Button className="text-danger bg-transparent" size="sm" variant="flat" onClick={() => { handleDelete(id) }}><img width="16" height="16" className="relative left-1" src="https://img.icons8.com/ios-glyphs/30/f54180/delete-forever.png" alt="delete-forever" />Delete</Button>
+                    </div>
                 </div>
                 <div className="bg-zinc-300/30 p-4 pt-2 rounded-md">
                     <h1 className="text-sm font-medium mb-2">Mobile</h1>
@@ -71,11 +87,11 @@ const ContactCard = ({ id }) => {
             </>
             ) : (
 
-                <div className="lg:w-[60%] h-[90vh] sm:w-full p-5 border-l flex flex-col items-center justify-center">
+                <div className=" h-[90vh]  p-5  flex flex-col ">
                     <Skeleton className="h-12 w-12 rounded-full mb-4" />
-                    <Skeleton className="h-6 w-3/5 rounded-lg mb-4" />
-                    <Skeleton className="h-4 w-3/5 rounded-lg mb-2" />
-                    <Skeleton className="h-4 w-3/5 rounded-lg mb-2" />
+                    <Skeleton className="h-6 w-4/5 rounded-lg mb-4" />
+                    <Skeleton className="h-4 w-4/5 rounded-lg mb-2" />
+                    <Skeleton className="h-4 w-4/5 rounded-lg mb-2" />
                 </div>
 
             )}

@@ -5,12 +5,14 @@ import { Desktop, Mobile } from '../../components/responsive/Responsive';
 import ContactCard from '../../components/ui/ContactCard/ContactCard';
 import ListCard from '../../components/ui/ListCard/ListCard';
 import ContactTableWrapper from '../../components/ui/ContactTableWrapper/ContactTableWrapper';
+import { useSelector } from "react-redux";
 
 export const Home = () => {
     const { id } = useParams();
     const [data, setData] = useState();
     const [page, setPage] = useState(1);
     const [searchValue, setSearchValue] = useState("");
+    const updateState = useSelector(state => state.update.updateState)
 
     useEffect(() => {
         if (searchValue) {
@@ -30,7 +32,7 @@ export const Home = () => {
             };
             fetchData();
         }
-    }, [searchValue, page]);
+    }, [searchValue, page, updateState]);
 
     const filteredData = data?.filter(contact =>
         contact.firstName.toLowerCase().includes(searchValue.toLowerCase()) ||

@@ -3,8 +3,10 @@ import UpdateForm from "../../form/UpdateForm";
 import { message } from "antd";
 import { updateContact } from "../../../api/updateApi";
 import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { toggleUpdateState } from "../../../features/update/updateSlice";
 
-export default function UpdateModal({ data, onUpdate }) {
+export default function UpdateModal({ data }) {
     const { isOpen, onOpen, onClose } = useDisclosure();
     const [messageApi, contextHolder] = message.useMessage();
     const [errors, setErrors] = useState([])
@@ -23,12 +25,16 @@ export default function UpdateModal({ data, onUpdate }) {
         });
     };
 
+    const dispatch = useDispatch();
+
+
     const handleUpdateForm = async (formData) => {
         try {
             const response = await updateContact(data._id, formData);
             console.log(response.data);
             success();
-            onUpdate();
+            setErrors({})
+            dispatch(toggleUpdateState());
             onClose();
         } catch (e) {
             error(e.response.data.message);

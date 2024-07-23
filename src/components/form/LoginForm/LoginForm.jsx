@@ -1,5 +1,7 @@
 import { useState } from "react"
 import { Input, Button } from "@nextui-org/react";
+import { validateLoginForm } from "./loginFormValidation";
+
 const LoginForm = ({ onSubmit, loading }) => {
     const [formData, setFormData] = useState({
         email: '',
@@ -16,27 +18,15 @@ const LoginForm = ({ onSubmit, loading }) => {
         })
     }
 
-    const validate = () => {
-        const errors = {};
 
-        if (!formData.email) {
-            errors.email = "Email required";
-        } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
-            errors.email = "Invalid email address";
-        }
-        if (!formData.password) errors.password = "Password required";
-        return errors;
-    }
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        const validationErrors = validate();
+        const validationErrors = validateLoginForm(formData);
         if (Object.keys(validationErrors).length === 0) {
             setErrors({})
             onSubmit(formData)
-            console.log('Form submitted', formData);
         } else {
-            console.log(validationErrors)
             setErrors(validationErrors);
         }
     };
@@ -50,7 +40,7 @@ const LoginForm = ({ onSubmit, loading }) => {
             <div>
                 <Input
                     placeholder="Email"
-                    className="mt-4 w-64 sm:w-80"
+                    className="mt-4 w-80 "
                     variant="bordered" name="email"
                     value={formData.email}
                     onChange={handleChange}
@@ -62,7 +52,7 @@ const LoginForm = ({ onSubmit, loading }) => {
 
                 <Input
                     placeholder="Password"
-                    className="mt-4 w-64 sm:w-80"
+                    className="mt-4 w-80 "
                     name="password"
                     type="password"
                     value={formData.password}
@@ -73,7 +63,7 @@ const LoginForm = ({ onSubmit, loading }) => {
 
                 {errors && <p className="text-danger text-[12px]">{errors.password}</p>}
             </div>
-            <Button color="default" className="mt-4 bg-black text-white rounded-md w-64 sm:w-80" type="submit" isLoading={loading}>
+            <Button color="default" className="mt-4 bg-black text-white rounded-md w-80 " type="submit" isLoading={loading}>
                 Login
             </Button>
         </form>
