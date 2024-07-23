@@ -33,12 +33,15 @@ export const Home = () => {
             fetchData();
         }
     }, [searchValue, page, updateState]);
+    const filteredData = data?.filter(contact => {
+        const searchParts = searchValue.toLowerCase().split(' ');
+        return searchParts.every(part =>
+            contact.firstName.toLowerCase().includes(part) ||
+            contact.lastName.toLowerCase().includes(part) ||
+            contact.company.toLowerCase().includes(part)
+        );
+    });
 
-    const filteredData = data?.filter(contact =>
-        contact.firstName.toLowerCase().includes(searchValue.toLowerCase()) ||
-        contact.lastName.toLowerCase().includes(searchValue.toLowerCase()) ||
-        contact.company.toLowerCase().includes(searchValue.toLowerCase())
-    );
 
     return (
         <div >

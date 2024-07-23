@@ -36,15 +36,13 @@ export default function CustomNavbar() {
 
             <NavbarContent className="sm:hidden pr-3" justify="start">
                 <NavbarBrand>
-                    <h1>logo</h1>
-                    <p className="font-bold text-inherit">CMS</p>
+                    <p className="font-black text-2xl ">CMS</p>
                 </NavbarBrand>
             </NavbarContent>
 
             <NavbarContent className="hidden sm:flex gap-4 justify-start" >
                 <NavbarBrand >
-                    <h1>logo</h1>
-                    <p className="font-bold ">CMS</p>
+                    <p className="font-black text-2xl ">CMS</p>
                 </NavbarBrand>
 
             </NavbarContent>
