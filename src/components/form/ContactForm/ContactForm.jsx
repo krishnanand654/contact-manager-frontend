@@ -156,6 +156,7 @@ const ContactForm = ({ handleCreate, setPercent, setErrorState, serverErrors }) 
                                         validateStatus={errors[`phoneNumbers${name}`] ? 'error' : errors[`phoneNumbers`] ? 'error' : ''}
                                         help={errors[`phoneNumbers${name}`]}
                                         required={false}
+                                        className="h-8"
                                     >
                                         <Form.Item
                                             {...restField}
@@ -172,10 +173,12 @@ const ContactForm = ({ handleCreate, setPercent, setErrorState, serverErrors }) 
                                         </Form.Item>
 
                                         {fields.length > 1 && (
-                                            <MinusCircleOutlined
-                                                className="dynamic-delete-button"
-                                                onClick={() => remove(name)}
-                                            />
+                                            <div className="relative w-full ">
+                                                <MinusCircleOutlined
+                                                    className="dynamic-delete-button text-danger absolute top-0 right-0"
+                                                    onClick={() => remove(name)}
+                                                />
+                                            </div>
                                         )}
                                     </Form.Item>
                                 ))}
@@ -183,6 +186,7 @@ const ContactForm = ({ handleCreate, setPercent, setErrorState, serverErrors }) 
                                 {fields.length < 2 && (
                                     <Form.Item>
                                         <Button
+                                            className="mt-5"
                                             onClick={() => add()}
                                             variant="bordered"
                                             icon={<PlusOutlined />}

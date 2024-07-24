@@ -5,13 +5,16 @@ import { Progress } from "@nextui-org/react";
 import { message } from 'antd';
 import { useDispatch } from "react-redux";
 import { toggleUpdateState } from "../../features/update/updateSlice";
+import { useNavigate } from "react-router-dom";
 
 const CreateContact = () => {
     const [percent, setPercent] = useState(16);
     const [messageApi, contextHolder] = message.useMessage();
     const [errorState, setErrorState] = useState(false);
     const [errors, setErrors] = useState([])
+
     const dispatch = useDispatch();
+    const nav = useNavigate();
 
     const success = () => {
         messageApi.open({
@@ -32,11 +35,12 @@ const CreateContact = () => {
             if (response) {
                 success();
                 dispatch(toggleUpdateState());
+                nav(`/home/${response.data._id}`);
+
             }
         } catch (e) {
             error(e.response.data.message)
             setErrors(e.response.data.errors[0])
-            console.log(e);
         }
     };
     return (

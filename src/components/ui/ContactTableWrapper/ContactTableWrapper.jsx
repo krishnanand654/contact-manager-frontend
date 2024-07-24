@@ -3,11 +3,8 @@ import { Pagination } from "@nextui-org/react"
 import { useNavigate } from "react-router-dom"
 import { Desktop, Mobile } from '../../../components/responsive/Responsive';
 
-
-const ContactTableWrapper = ({ children, page, setPage, searchValue, setSearchValue }) => {
+const ContactTableWrapper = ({ children, total, page, setPage, searchValue, setSearchValue, limit }) => {
     const nav = useNavigate();
-
-
     return (
         <div className="w-full">
             <div className=" ">
@@ -16,7 +13,7 @@ const ContactTableWrapper = ({ children, page, setPage, searchValue, setSearchVa
                         <div>
                             <h1 className="font-medium text-3xl">Contacts</h1>
                             <p className="text-[12px] mt-1  text-zinc-500">
-                                All Contacts
+                                All Contacts: {total}
                             </p>
                         </div>
                         <div>
@@ -48,7 +45,7 @@ const ContactTableWrapper = ({ children, page, setPage, searchValue, setSearchVa
                 </div>
             </div>
             <div className="mt-5 flex items-end  justify-center" >
-                <Pagination size="sm" color="default" showControls total={10} page={page} onChange={(page) => setPage(page)} initialPage={1} />
+                <Pagination size="sm" color="default" showControls total={limit} page={page} onChange={(page) => setPage(page)} initialPage={1} />
             </div>
         </div>
     )

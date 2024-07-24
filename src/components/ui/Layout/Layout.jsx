@@ -9,7 +9,7 @@ const Layout = () => {
         <>
             <CustomNavbar />
             <div style={{ display: "flex" }}>
-                <div className="fixed">
+                <div className="fixed hidden md:block sm:block">
                     <Sidebar />
                 </div>
                 <div className="test relative w-screen sm:ml-[250px]">

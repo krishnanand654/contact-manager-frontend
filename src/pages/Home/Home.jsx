@@ -11,6 +11,8 @@ export const Home = () => {
     const { id } = useParams();
     const [data, setData] = useState();
     const [page, setPage] = useState(1);
+    const [limit, setLimit] = useState(1);
+    const [total, setTotal] = useState(0);
     const [searchValue, setSearchValue] = useState("");
     const updateState = useSelector(state => state.update.updateState)
 
@@ -28,11 +30,14 @@ export const Home = () => {
         } else {
             const fetchData = async () => {
                 const response = await fetchContact(page);
-                setData(response.data);
+                setData(response.data.data);
+                setLimit(response.data.totalPages);
+                setTotal(response.data.total);
             };
             fetchData();
         }
     }, [searchValue, page, updateState]);
+
     const filteredData = data?.filter(contact => {
         const searchParts = searchValue.toLowerCase().split(' ');
         return searchParts.every(part =>
@@ -50,6 +55,8 @@ export const Home = () => {
                     <ContactTableWrapper
                         page={page}
                         setPage={setPage}
+                        limit={limit}
+                        total={total}
                         searchValue={searchValue}
                         setSearchValue={setSearchValue}
                     >
@@ -65,6 +72,8 @@ export const Home = () => {
                     <ContactTableWrapper
                         page={page}
                         setPage={setPage}
+                        limit={limit}
+                        total={total}
                         searchValue={searchValue}
                         setSearchValue={setSearchValue}
                     >

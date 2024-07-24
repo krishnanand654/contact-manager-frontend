@@ -1,7 +1,7 @@
 import { Input, Button } from "@nextui-org/react";
 import { useState, useEffect } from "react";
 import { Textarea } from "@nextui-org/react";
-import { validateContactForm } from "./ContactForm/contactFormValidation";
+import { validateContactForm } from "./contactFormValidation";
 
 const UpdateForm = ({ contactData, handleUpdateForm, serverErrors }) => {
     const [formData, setFormData] = useState({

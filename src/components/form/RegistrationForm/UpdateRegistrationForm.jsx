@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import { validateUserForm } from './registrationFormValidation';
 import { Input, Button, Select, SelectItem } from '@nextui-org/react';
 
-const RegistrationForm = ({ handleRegister, error = [] }) => {
+export const UpdateRegistrationForm = ({ userData, handleUpdate, error = [], loading }) => {
     const [formData, setFormData] = useState({
         firstName: '',
         lastName: '',
@@ -20,7 +20,6 @@ const RegistrationForm = ({ handleRegister, error = [] }) => {
             postalCode: '',
             country: ''
         },
-        profilePicture: null,
     });
 
     const [errors, setErrors] = useState({});
@@ -50,14 +49,15 @@ const RegistrationForm = ({ handleRegister, error = [] }) => {
         }
     };
 
+    useEffect(() => {
+        setFormData(userData)
+    }, [userData])
+
     const handleSubmit = (e) => {
         e.preventDefault();
         const validationErrors = validateUserForm(formData);
-        console.log(validationErrors);
         if (Object.keys(validationErrors).length === 0) {
-
-
-            handleRegister(formData);
+            handleUpdate(formData);
             setErrors({});
         } else {
             setErrors(validationErrors);
@@ -75,7 +75,7 @@ const RegistrationForm = ({ handleRegister, error = [] }) => {
     }, [error, formData]);
 
     return (
-        <form onSubmit={handleSubmit} encType="multipart/form-data" >
+        <form onSubmit={handleSubmit} encType="multipart/form-data"  >
             <div className=''>
                 <div className=''>
                     <div>
@@ -98,22 +98,10 @@ const RegistrationForm = ({ handleRegister, error = [] }) => {
                             {errors.email && <span className='text-[12px] text-danger'>{errors.email}</span>}
                         </div>
                     </div>
+
                     <div>
 
-                        <Input label="Password" isRequired variant="bordered" type="password" name="password" value={formData.password} onChange={handleChange} />
-                        <div className="min-h-[20px]">
-                            {errors.password && <span className='text-[12px] text-danger'>{errors.password}</span>}
-                        </div>
-                    </div>
-                    <div>
-                        <Input label="Confirm Password" isRequired variant="bordered" type="password" name="confirmPassword" value={formData.confirmPassword} onChange={handleChange} />
-                        <div className="min-h-[20px]">
-                            {errors.confirmPassword && <span className='text-[12px] text-danger'>{errors.confirmPassword}</span>}
-                        </div>
-                    </div>
-                    <div>
-
-                        <Input label="Date of Birth" isRequired variant="bordered" type="date" name="dateOfBirth" value={formData.dateOfBirth} onChange={handleChange} />
+                        <Input label="Date of Birth" isRequired variant="bordered" type="date" name="dateOfBirth" value={formData.dateOfBirth.split('T')[0]} onChange={handleChange} />
                         <div className="min-h-[20px]">
                             {errors.dateOfBirth && <span className='text-[12px] text-danger'>{errors.dateOfBirth}</span>}
                         </div>
@@ -124,10 +112,8 @@ const RegistrationForm = ({ handleRegister, error = [] }) => {
                             value={formData.gender}
                             onChange={handleChange}
                             variant='bordered'
-                            placeholder="Select Gender"
-                            className=""
+                            placeholder={formData.gender}
                             aria-label='gender'
-
                         >
                             <SelectItem key="">Select</SelectItem>
                             <SelectItem key="male">Male</SelectItem>
@@ -180,19 +166,13 @@ const RegistrationForm = ({ handleRegister, error = [] }) => {
                             {errors['address.country'] && <span className='text-[12px] text-danger'>{errors['address.country']}</span>}
                         </div>
                     </div>
-                    <div>
-                        <Input label="Profile Picture" variant="bordered" type="file" name="profilePicture" onChange={handleChange} />
-                        <div className="min-h-[20px]">
-                            {errors.profilePicture && <span className='text-[12px] text-danger'>{errors.profilePicture}</span>}
-                        </div>
-                    </div>
+
                 </div>
             </div>
             <div className='mt-5 mb-10 h-32'>
-                <Button isLoading={false} className='bg-black text-white mt-4 w-full rounded-sm' type="submit">Register</Button>
+                <Button isLoading={loading} className='bg-black text-white mt-4 w-1/4 rounded-sm' type="submit">Update</Button>
             </div>
         </form>
     );
 };
 
-export default RegistrationForm;
