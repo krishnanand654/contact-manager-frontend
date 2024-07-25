@@ -1,7 +1,7 @@
 export const validateContactForm = (formData) => {
     const errors = {};
     if (!formData.firstName) errors.firstName = "First name is required";
-    if (!formData.lastName) errors.lastName = "Last name is required";
+    // if (!formData.lastName) errors.lastName = "Last name is required";
     if (!formData.address) errors.address = "Address is required";
     if (!formData.company) errors.company = "Company is required";
 

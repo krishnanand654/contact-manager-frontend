@@ -44,9 +44,10 @@ const ContactTableWrapper = ({ children, total, page, setPage, searchValue, setS
                     {children}
                 </div>
             </div>
-            <div className="mt-5 flex items-end  justify-center" >
-                <Pagination size="sm" color="default" showControls total={limit} page={page} onChange={(page) => setPage(page)} initialPage={1} />
-            </div>
+            {total > 0 &&
+                <div className="mt-5 flex items-end  justify-center" >
+                    <Pagination size="sm" color="default" showControls total={limit} page={page} onChange={(page) => setPage(page)} initialPage={1} />
+                </div>}
         </div>
     )
 }
